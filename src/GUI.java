@@ -1,10 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Base64;
 import java.io.*;
+import java.sql.*;
 import java.util.*;
 import java.util.Random;
 
@@ -18,10 +20,20 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+
+//class G {
+//	  static String globalVar = "Global Value";
+//	  static boolean userlogin = false;
+//	  static LoginFrame frame = new LoginFrame();
+//	  static Connection connection;
+//	  static String id;
+//}
 
 public class GUI implements ActionListener{
 	
@@ -37,6 +49,7 @@ public class GUI implements ActionListener{
 	JScrollPane sp;
 	DefaultListModel<String> model = new DefaultListModel<>();
     JList<String> list = new JList<>(model);
+    static PreparedStatement pst;
 	
 	
 	// adding more characters to suggest
@@ -58,7 +71,8 @@ public class GUI implements ActionListener{
         return str;
     }
     
- // make powerful String
+    // make powerful String
+    
     static StringBuilder suggester(int l, int u, int d,
                               int s, StringBuilder str)
     {
@@ -173,7 +187,7 @@ public class GUI implements ActionListener{
 		
 		JFrame frame = new JFrame("STRONG PASSWORD GENERATOR");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200,500);
+        frame.setSize(1200,800);
 
         //Creating the MenuBar and adding components
         JMenuBar mb = new JMenuBar();
@@ -191,7 +205,7 @@ public class GUI implements ActionListener{
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
-        panel.setSize(1200, 500);
+        panel.setSize(1200, 800);
         JLabel label = new JLabel("Enter Password");
         tf = new JTextField(10); // accepts upto 10 characters
         tf2 = new JTextField();
@@ -294,16 +308,62 @@ public class GUI implements ActionListener{
 		return null;
 	}
 
-	public static void main (String[] args) {
-		LoginFrame frame = new LoginFrame();
-        frame.setTitle("Login Form");
-        frame.setVisible(true);
-        frame.setBounds(10, 10, 370, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        
-		new GUI();
-	}
+//	public static void main (String[] args) {
+//		
+//		
+//        G.frame.setTitle("Login Form");
+//        G.frame.setVisible(true);
+//        G.frame.setBounds(10, 10, 1200,800);
+//        G.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        G.frame.setResizable(false);
+//        try {
+//        	String createTableSQL = "create table Users1(\r\n" + "  id  int(3) primary key,\r\n" +
+//        	        "  name varchar(20),\r\n" + "  email varchar(20),\r\n" + "  country varchar(20),\r\n" +
+//        	        "  password varchar(20)\r\n" + "  );";
+//        	String getLoginData = "SELECT * FROM users1";
+//        	G.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pasworddb", "root", "");  //Establishing connection
+//        	System.out.println("Connected With the database successfully");
+//        	Statement statement = G.connection.createStatement();
+//        	// statement.execute(createTableSQL);
+//        	Boolean loginData =  statement.execute(getLoginData);
+//        	System.out.println("Login Data " + loginData);
+//        	
+//        	
+//            
+////            try {
+////            	pst = connection.prepareStatement("SELECT * FROM users1");
+////                ResultSet rs = pst.executeQuery();
+////                System.out.println(rs);
+////                int i = 0;
+////                if (rs.next()) {
+////                    String uname = rs.getString("name");
+////                    String email = rs.getString("email");
+////                    String pass = rs.getString("password");
+////                    String cou = rs.getString("country");
+////                    System.out.println(uname + email + pass + cou);
+////                    i++;
+////                }
+////                if (i < 1) {
+////                    JOptionPane.showMessageDialog(null, "No Record Found", "Error", JOptionPane.ERROR_MESSAGE);
+////                }
+////                if (i == 1) {
+////                    System.out.println(i + " Record Found");
+////                } else {
+////                    System.out.println(i + " Records Found");
+////                }
+////            } catch (Exception ex) {
+////                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+////            }
+//        	} catch (SQLException e) {
+//        	System.out.println("Error while connecting to the database");
+//        	}
+//        System.out.println("Class1: "+G.globalVar);
+//        System.out.println("G.userlogin : "+G.userlogin);
+////		if(G.userlogin == true) {
+////			frame.setVisible(false);
+////			System.out.println("G.userlogin : "+G.userlogin);
+////		}
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -326,14 +386,6 @@ public class GUI implements ActionListener{
         	model.addElement(s);
         }
         
-	}
-	
-	public class Login {
-	    public static void main(String[] a) {
-	        
-
-	    }
-
 	}
 	
 }
